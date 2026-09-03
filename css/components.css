@@ -1,0 +1,377 @@
+/* Component Styles (BEM) */
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn--primary {
+  background-color: var(--color-dark);
+  color: var(--color-white);
+}
+
+.btn--primary:hover {
+  background-color: #284459;
+}
+
+.btn--secondary {
+  background-color: var(--color-accent);
+  color: var(--color-dark);
+}
+
+.btn--secondary:hover {
+  background-color: #82c4f5;
+}
+
+.btn--danger {
+  background-color: var(--color-danger);
+  color: var(--color-white);
+}
+
+.btn--danger:hover {
+  background-color: #a81c1c;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn--lg {
+  padding: var(--spacing-md);
+  font-size: 1.05rem;
+}
+
+/* Cards */
+.card {
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.card--margin-top {
+  margin-top: var(--spacing-md);
+}
+
+.card--setting {
+  margin-bottom: var(--spacing-md);
+}
+
+.card--danger {
+  border-color: #FFCDD2;
+  background-color: #FFF8F8;
+}
+
+/* Quiz Card (Belajar) */
+.quiz-card {
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.quiz-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.quiz-card__badge {
+  background-color: var(--color-accent);
+  color: var(--color-dark);
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.quiz-card__timer {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  background-color: var(--color-input-bg);
+  color: var(--color-dark);
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+}
+
+.quiz-card__question-container {
+  background-color: var(--color-bg);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg) var(--spacing-md);
+  text-align: center;
+}
+
+.quiz-card__question {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-dark);
+  letter-spacing: 0.02em;
+  word-break: break-word;
+}
+
+/* Quiz Input & Keypad */
+.quiz-card__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.quiz-card__input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.quiz-card__input {
+  width: 100%;
+  padding: var(--spacing-md);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  background-color: var(--color-input-bg);
+  border: 2px solid var(--color-secondary);
+  border-radius: var(--radius-md);
+  outline: none;
+  color: var(--color-dark);
+  transition: border-color 0.15s ease;
+}
+
+.quiz-card__input:focus {
+  border-color: var(--color-dark);
+}
+
+.quiz-card__clear-btn {
+  position: absolute;
+  right: var(--spacing-md);
+  color: var(--color-text-muted);
+  font-size: 1.2rem;
+  padding: var(--spacing-xs);
+}
+
+/* On-Screen Virtual Keypad */
+.virtual-keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-xs);
+}
+
+.keypad-btn {
+  background-color: var(--color-input-bg);
+  color: var(--color-dark);
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: var(--spacing-sm) 0;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.1s ease;
+  user-select: none;
+}
+
+.keypad-btn:active {
+  background-color: var(--color-accent);
+  transform: scale(0.96);
+}
+
+.keypad-btn--backspace {
+  color: var(--color-danger);
+}
+
+/* Statistics Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-sm);
+}
+
+.stat-card {
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-card__icon {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.stat-card__icon--blue { background-color: #E3F2FD; color: #1976D2; }
+.stat-card__icon--green { background-color: #E8F5E9; color: #388E3C; }
+.stat-card__icon--orange { background-color: #FFF3E0; color: #F57C00; }
+.stat-card__icon--purple { background-color: #F3E5F5; color: #7B1FA2; }
+
+.stat-card__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-card__value {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-dark);
+}
+
+.stat-card__label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+/* Data Table (History) */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: var(--spacing-sm);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.data-table th, .data-table td {
+  padding: var(--spacing-sm);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.data-table th {
+  background-color: var(--color-input-bg);
+  color: var(--color-dark);
+  font-weight: 700;
+}
+
+.badge-status {
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+
+.badge-status--success {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.badge-status--danger {
+  background-color: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+/* Achievements List */
+.achievements-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.achievement-card {
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+  opacity: 0.6;
+  filter: grayscale(0.8);
+  transition: all 0.2s ease;
+}
+
+.achievement-card--unlocked {
+  opacity: 1;
+  filter: none;
+  border-color: var(--color-accent);
+}
+
+.achievement-card__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-input-bg);
+  color: var(--color-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.achievement-card--unlocked .achievement-card__icon {
+  background-color: var(--color-accent);
+  color: var(--color-dark);
+}
+
+.achievement-card__info h3 {
+  font-size: 0.95rem;
+  margin-bottom: 2px;
+}
+
+.achievement-card__info p {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.achievement-card__time {
+  font-size: 0.7rem;
+  color: var(--color-success);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* Settings Items */
+.setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.setting-item__text h3 {
+  font-size: 0.95rem;
+  margin-bottom: 2px;
+}
+
+.setting-item__text p {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
