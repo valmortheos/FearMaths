@@ -1,20 +1,28 @@
-# AGENTS.md – FearMaths Project
+# AGENTS.md — FearMaths Project
 
 ## 🧠 Ringkasan Proyek
-FearMaths adalah web aplikasi belajar matematika interaktif, **client-side**, dengan pendekatan **mobile-first**, **vanilla**, dan **modern minimalis**. Tujuan utamanya adalah menyediakan latihan soal matematika dengan tingkat kesulitan (easy, normal, hard, nightmare) dan pilihan operasi (acak, penjumlahan, pengurangan, perkalian, pembagian, atau campuran). Setiap soal memiliki timer sendiri, dan semua progres & pencapaian disimpan di **IndexedDB** dengan dukungan ekspor/impor biner.
+FearMaths adalah aplikasi web belajar matematika interaktif, **client-side**, dengan pendekatan **mobile-first**, **vanilla JS**, dan desain **modern minimalis**. Aplikasi menyajikan latihan soal matematika dengan tingkat kesulitan (`easy`, `normal`, `hard`, `nightmare`) dan pilihan operasi (acak, penjumlahan, pengurangan, perkalian, pembagian, atau campuran). Setiap soal memiliki timer sendiri, dan seluruh progres serta pencapaian disimpan di **IndexedDB**, dengan dukungan ekspor/impor dalam format biner kustom.
+
+Proyek ini dikembangkan oleh **valmortheos**.
 
 ## 🎨 Design System (Wajib)
-- **Warna** (tanpa gradasi):
-  - Putih: `#F7F8F0`
-  - Biru Muda: `#9CD5FF`
-  - Biru Tenang: `#7AAACE`
-  - Biru Sangat Tua: `#355872`
-- **Responsive**: Mobile-first, gunakan media queries untuk layar ≥ 768px.
-- **Tipografi**: Sans-serif, ukuran relatif (rem/em).
-- **Konsistensi**: Gunakan spacing, shadow, dan border radius yang terdefinisi di CSS variables.
 
-## 📁 Struktur & Modularitas (Multi-file)
+**Palet warna** (tanpa gradasi):
 
+| Nama | Hex |
+|---|---|
+| Putih | `#F7F8F0` |
+| Biru Muda | `#9CD5FF` |
+| Biru Tenang | `#7AAACE` |
+| Biru Sangat Tua | `#355872` |
+
+- **Responsive**: mobile-first; gunakan media query untuk layar ≥ 768px.
+- **Tipografi**: sans-serif, ukuran relatif (`rem`/`em`).
+- **Konsistensi**: spacing, shadow, dan border-radius didefinisikan sebagai CSS custom properties (variables), bukan nilai hardcoded di tiap komponen.
+
+## 📁 Struktur Proyek (Multi-file, Modular)
+
+```
 /src
 ├── index.html
 ├── css/
@@ -23,60 +31,58 @@ FearMaths adalah web aplikasi belajar matematika interaktif, **client-side**, de
 │   ├── layout.css
 │   └── components.css
 ├── js/
-│   ├── app.js           # entry point, routing
-│   ├── algorithm/       # inti pembuatan soal (pisahkan di sini)
-│   │   ├── generator.js # algoritma utama (adaptive, tidak hardcode)
-│   │   ├── evaluator.js # penilaian jawaban
-│   │   └── trainer.js   # logika adaptif berdasarkan IndexedDB
+│   ├── app.js               # entry point, routing
+│   ├── algorithm/           # inti pembuatan soal — dipisah agar tidak spaghetti
+│   │   ├── generator.js     # algoritma generatif utama (tidak hardcode)
+│   │   ├── evaluator.js     # penilaian jawaban
+│   │   └── trainer.js       # logika adaptif berbasis riwayat di IndexedDB
 │   ├── db/
-│   │   ├── indexedDB.js # koneksi, CRUD
-│   │   └── exportImport.js # binary format dengan header timestamp
+│   │   ├── indexedDB.js     # koneksi & operasi CRUD
+│   │   └── exportImport.js  # format biner + header timestamp
 │   ├── ui/
-│   │   ├── renderer.js  # DOM manipulation
-│   │   ├── navigation.js # bottom bar & navbar
-│   │   └── timer.js     # timer per soal
+│   │   ├── renderer.js      # manipulasi DOM
+│   │   ├── navigation.js    # bottom bar & navbar
+│   │   └── timer.js         # timer per soal
 │   └── utils/
 │       ├── helpers.js
 │       └── constants.js
-└── assets/              # icon, font (gunakan library eksternal)
+└── assets/                  # ikon, font (pakai library eksternal via CDN)
+```
 
-
-- **Algoritma** wajib berada di folder terpisah agar tidak spaghetti.
-- Setiap modul harus memiliki tanggung jawab tunggal.
+Setiap modul memegang satu tanggung jawab tunggal (single responsibility).
 
 ## ⚙️ Fitur Wajib
-1. **Level & Operasi**: Pilihan level dan operasi yang mempengaruhi kompleksitas soal.
-2. **Timer**: Setiap soal mencatat waktu penyelesaian (detik). Tampilkan timer saat mengerjakan.
-3. **IndexedDB**: Simpan data progres (riwayat jawaban, waktu, level, operasi) dan pencapaian (achievements).
-4. **Ekspor/Impor Biner**: Format biner khusus FearMaths dengan header berisi `timestamp` (timezone-aware) dan metadata.
-5. **Multipage**: SPA dengan routing via hash atau history API, dilengkapi bottom bar (navigasi utama) dan navbar (opsi filter).
-6. **Library Pendukung**:
+
+1. **Level & Operasi** — memengaruhi kompleksitas soal yang dihasilkan.
+2. **Timer** — mencatat waktu penyelesaian tiap soal (detik), tampil real-time saat mengerjakan.
+3. **IndexedDB** — menyimpan riwayat jawaban (level, operasi, waktu, benar/salah) dan achievements.
+4. **Ekspor/Impor Biner** — format kustom FearMaths dengan header berisi `timestamp` (timezone-aware) dan metadata.
+5. **Multipage (SPA)** — routing via hash atau History API, dengan bottom bar (navigasi utama) dan navbar (filter/opsi).
+6. **Library pendukung via CDN** (jangan bundle besar):
    - Ikon: [Font Awesome](https://fontawesome.com/) atau [Material Icons](https://fonts.google.com/icons)
    - Alert/Modal: [SweetAlert2](https://sweetalert2.github.io/) atau [Notyf](https://carlosroso.com/notyf/)
-   - (Gunakan CDN, jangan bundle besar).
 
 ## 🧪 Algoritma Pembuatan Soal
-- **Jangan hardcode** daftar soal. Gunakan algoritma generatif yang menghasilkan soal berdasarkan:
+
+- **Dilarang hardcode** daftar soal. Soal dibangkitkan secara generatif berdasarkan:
   - Level (rentang angka, jumlah operand, jenis operasi)
-  - Operasi yang dipilih (tunggal/campur)
-  - Riwayat performa user (adaptive): soal yang sering salah akan muncul lebih sering.
-- Algoritma harus **scalable** dan mudah ditambah variasi soal di masa depan.
+  - Operasi yang dipilih (tunggal atau campur)
+  - Riwayat performa user — adaptif, soal yang sering salah muncul lebih sering
+- Algoritma harus scalable dan mudah diperluas dengan variasi soal baru.
 
 ## 📦 Deployment
-- Hosting di **GitHub Pages** (atau platform static lainnya).
-- Pastikan semua aset di-load secara relatif.
-- Tidak perlu build tools (vanilla).
+
+- Hosting: **GitHub Pages** (atau static hosting lain).
+- Semua aset dimuat secara relatif.
+- Tidak memerlukan build tools (murni vanilla).
 
 ## 🤖 Instruksi untuk AI Agents
-- **Semua kode** harus vanilla (ES6+), tidak menggunakan framework.
-- **Modularitas** adalah prioritas: pisahkan logika, UI, dan data.
-- **Komentari** fungsi kompleks dengan JSDoc.
-- **Gunakan** `async/await` untuk operasi IndexedDB.
-- **Responsif** diuji dengan emulator mobile (320px ke atas).
-- Jika ada file `Jules_AI.md` atau `$*_AI.md` di repository, ikuti panduan spesifik di sana.
-- **Jangan** menyertakan file biner atau library yang tidak diperlukan.
-- **Testing** minimal: cek konsol tidak ada error dan IndexedDB berjalan.
 
----
-
-**Referensi**: Proyek ini dikembangkan oleh **valmortheos**.
+- Semua kode **vanilla ES6+**, tanpa framework.
+- **Modularitas** adalah prioritas: pisahkan logika, UI, dan data secara ketat.
+- Komentari fungsi kompleks dengan JSDoc.
+- Gunakan `async/await` untuk semua operasi IndexedDB.
+- Uji responsivitas mulai dari lebar layar 320px.
+- Jangan sertakan file biner atau library yang tidak diperlukan.
+- Testing minimal: pastikan tidak ada error di console dan IndexedDB berfungsi normal.
+- Jika ditemukan file `Jules.md` atau `*_AI.md` lain di root repo, ikuti panduan spesifik di sana sebagai tambahan (bukan pengganti) dokumen ini.
