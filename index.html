@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FearMaths</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- CSS Styles -->
+  <link rel="stylesheet" href="src/css/variables.css">
+  <link rel="stylesheet" href="src/css/base.css">
+  <link rel="stylesheet" href="src/css/layout.css">
+  <link rel="stylesheet" href="src/css/components.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Top Navbar / Header -->
+    <header class="navbar">
+      <div class="navbar__brand">
+        <i class="fa-solid fa-brain navbar__logo"></i>
+        <span class="navbar__title">FearMaths</span>
+      </div>
+      <div class="navbar__controls">
+        <div class="navbar__group">
+          <label for="level-select" class="navbar__label">Level:</label>
+          <select id="level-select" class="navbar__select">
+            <option value="easy">Easy (1–10)</option>
+            <option value="normal" selected>Normal (1–50)</option>
+            <option value="hard">Hard (1–100)</option>
+            <option value="nightmare">Nightmare (1–500)</option>
+          </select>
+        </div>
+        <div class="navbar__group">
+          <label for="operation-select" class="navbar__label">Operasi:</label>
+          <select id="operation-select" class="navbar__select">
+            <option value="acak" selected>Acak (Random Mode)</option>
+            <option value="+">Penjumlahan (+)</option>
+            <option value="−">Pengurangan (−)</option>
+            <option value="×">Perkalian (×)</option>
+            <option value="÷">Pembagian (÷)</option>
+            <option value="campur">Campur (Mix +−×÷)</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Pages (Tab Content) -->
+    <main id="main-content" class="main-content">
+      <!-- Tab Belajar / Quiz Page -->
+      <section id="tab-learn" class="tab-content tab-content--active">
+        <div class="quiz-card">
+          <div class="quiz-card__header">
+            <div class="quiz-card__badge" id="quiz-level-badge">Normal</div>
+            <div class="quiz-card__timer" id="quiz-timer">
+              <i class="fa-regular fa-clock"></i>
+              <span id="timer-display">0.0s</span>
+            </div>
+          </div>
+
+          <div class="quiz-card__question-container">
+            <div class="quiz-card__question" id="question-text">Loading...</div>
+          </div>
+
+          <form id="quiz-form" class="quiz-card__form" autocomplete="off" onsubmit="return false;">
+            <div class="quiz-card__input-wrapper">
+              <input type="text" id="answer-input" class="quiz-card__input" placeholder="Masukkan jawaban..." inputmode="decimal" autocomplete="off" />
+              <button type="button" id="clear-btn" class="quiz-card__clear-btn" title="Hapus Input">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+
+            <!-- On-Screen Virtual Numeric Keypad -->
+            <div class="virtual-keypad">
+              <button type="button" class="keypad-btn" data-key="7">7</button>
+              <button type="button" class="keypad-btn" data-key="8">8</button>
+              <button type="button" class="keypad-btn" data-key="9">9</button>
+              <button type="button" class="keypad-btn" data-key="4">4</button>
+              <button type="button" class="keypad-btn" data-key="5">5</button>
+              <button type="button" class="keypad-btn" data-key="6">6</button>
+              <button type="button" class="keypad-btn" data-key="1">1</button>
+              <button type="button" class="keypad-btn" data-key="2">2</button>
+              <button type="button" class="keypad-btn" data-key="3">3</button>
+              <button type="button" class="keypad-btn" data-key="-">− / .</button>
+              <button type="button" class="keypad-btn" data-key="0">0</button>
+              <button type="button" class="keypad-btn keypad-btn--backspace" data-key="backspace">
+                <i class="fa-solid fa-backspace"></i>
+              </button>
+            </div>
+
+            <button type="submit" id="submit-btn" class="btn btn--primary btn--block btn--lg">
+              <i class="fa-solid fa-paper-plane"></i> Kirim Jawaban
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Tab Statistik -->
+      <section id="tab-stats" class="tab-content">
+        <div class="section-title">
+          <h2><i class="fa-solid fa-chart-line"></i> Statistik Progres</h2>
+          <p>Lacak performa dan riwayat latihan matematikamu.</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card__icon stat-card__icon--blue"><i class="fa-solid fa-list-check"></i></div>
+            <div class="stat-card__info">
+              <span class="stat-card__value" id="stat-total-questions">0</span>
+              <span class="stat-card__label">Total Soal Selesai</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__icon stat-card__icon--green"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="stat-card__info">
+              <span class="stat-card__value" id="stat-accuracy">0%</span>
+              <span class="stat-card__label">Akurasi Jawaban</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__icon stat-card__icon--orange"><i class="fa-solid fa-stopwatch"></i></div>
+            <div class="stat-card__info">
+              <span class="stat-card__value" id="stat-avg-time">0s</span>
+              <span class="stat-card__label">Rata-rata Waktu</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__icon stat-card__icon--purple"><i class="fa-solid fa-fire"></i></div>
+            <div class="stat-card__info">
+              <span class="stat-card__value" id="stat-current-streak">0</span>
+              <span class="stat-card__label">Beruntun Saat Ini</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card--margin-top">
+          <h3><i class="fa-solid fa-clock-rotate-left"></i> Riwayat Terakhir</h3>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Waktu</th>
+                  <th>Level</th>
+                  <th>Soal</th>
+                  <th>Jawaban</th>
+                  <th>Status</th>
+                  <th>Durasi</th>
+                </tr>
+              </thead>
+              <tbody id="history-table-body">
+                <tr>
+                  <td colspan="6" class="text-center">Belum ada riwayat pengerjaan.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab Pencapaian -->
+      <section id="tab-achievements" class="tab-content">
+        <div class="section-title">
+          <h2><i class="fa-solid fa-trophy"></i> Pencapaian & Lencana</h2>
+          <p>Selesaikan tantangan untuk membuka semua lencana!</p>
+        </div>
+
+        <div class="achievements-grid" id="achievements-container">
+          <!-- Dynamically loaded -->
+        </div>
+      </section>
+
+      <!-- Tab Pengaturan -->
+      <section id="tab-settings" class="tab-content">
+        <div class="section-title">
+          <h2><i class="fa-solid fa-gear"></i> Pengaturan & Data</h2>
+          <p>Kelola data lokal, ekspor/impor biner, dan informasi aplikasi.</p>
+        </div>
+
+        <div class="settings-group">
+          <div class="card card--setting">
+            <div class="setting-item">
+              <div class="setting-item__text">
+                <h3>Ekspor Data Progres</h3>
+                <p>Unduh seluruh progres dan pencapaian ke file biner format kustom FearMaths (.fmd).</p>
+              </div>
+              <button type="button" id="export-btn" class="btn btn--secondary">
+                <i class="fa-solid fa-download"></i> Ekspor Data
+              </button>
+            </div>
+          </div>
+
+          <div class="card card--setting">
+            <div class="setting-item">
+              <div class="setting-item__text">
+                <h3>Impor Data Progres</h3>
+                <p>Unggah file biner (.fmd) untuk memulihkan progres dan pencapaian kamu.</p>
+              </div>
+              <div>
+                <input type="file" id="import-file-input" accept=".fmd,.bin" style="display: none;" />
+                <button type="button" id="import-btn" class="btn btn--secondary">
+                  <i class="fa-solid fa-upload"></i> Impor Data
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card card--setting card--danger">
+            <div class="setting-item">
+              <div class="setting-item__text">
+                <h3>Reset Seluruh Data</h3>
+                <p>Hapus seluruh riwayat pengerjaan dan pencapaian yang tersimpan di IndexedDB.</p>
+              </div>
+              <button type="button" id="reset-btn" class="btn btn--danger">
+                <i class="fa-solid fa-trash-can"></i> Reset Data
+              </button>
+            </div>
+          </div>
+
+          <div class="card card--setting">
+            <h3><i class="fa-solid fa-circle-info"></i> Tentang FearMaths</h3>
+            <p><strong>Versi:</strong> 1.0.0</p>
+            <p><strong>Pengembang:</strong> valmortheos</p>
+            <p>FearMaths dibuat dengan murni Vanilla JavaScript, HTML5, CSS3, IndexedDB, dan desain mobile-first modern tanpa build tools.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <a href="#learn" class="bottom-nav__item bottom-nav__item--active" data-tab="learn">
+        <i class="fa-solid fa-calculator bottom-nav__icon"></i>
+        <span class="bottom-nav__label">Belajar</span>
+      </a>
+      <a href="#stats" class="bottom-nav__item" data-tab="stats">
+        <i class="fa-solid fa-chart-column bottom-nav__icon"></i>
+        <span class="bottom-nav__label">Statistik</span>
+      </a>
+      <a href="#achievements" class="bottom-nav__item" data-tab="achievements">
+        <i class="fa-solid fa-trophy bottom-nav__icon"></i>
+        <span class="bottom-nav__label">Pencapaian</span>
+      </a>
+      <a href="#settings" class="bottom-nav__item" data-tab="settings">
+        <i class="fa-solid fa-sliders bottom-nav__icon"></i>
+        <span class="bottom-nav__label">Pengaturan</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- Entry Script (ES Module) -->
+  <script type="module" src="src/js/app.js"></script>
+</body>
+</html>
